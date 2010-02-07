@@ -4,7 +4,7 @@ Donate link: http://lesterchan.net/wordpress
 Tags: pagenavi, navi, navigation, wp-pagenavi, page
 Requires at least: 2.8
 Tested up to: 2.9.1
-Stable tag: 2.50
+Stable tag: 2.60
 
 Adds a more advanced paging navigation your WordPress blog.
 
@@ -16,6 +16,8 @@ Example:
 
 	Pages (17): [1] 2 3 4 » ... Last »
 
+
+<br>
 [Demo](http://lesterchan.net/wordpress/) | [Translations](http://dev.wp-plugins.org/browser/wp-pagenavi/i18n/) | [Support Forums](http://forums.lesterchan.net/index.php?board=14.0)
 
 = Credits =
@@ -60,7 +62,8 @@ Alternatively, you can uncheck the "Use pagenavi.css?" option from the settings 
 
 == Screenshots ==
 
-[WP-PageNavi Screenshots](http://lesterchan.net/wordpress/screenshots/browse/wp-pagenavi/ "WP-PageNavi Screenshots")
+1. Default appearance
+2. Options page
 
 == Frequently Asked Questions ==
 
@@ -69,6 +72,7 @@ Alternatively, you can uncheck the "Use pagenavi.css?" option from the settings 
 == Changelog ==
 
 = 2.60 (2010-02-07) =
+* NEW: Compatible With WordPress 2.9
 * NEW: Added "previouspostslink" and "nextpostslink" CSS classes for styling next/previous posts link by Joost de Valk
 * NEW: Added option to include pagenavi-css.css In WP-Admin -> Settings -> PageNavi
 * FIXED: check for pagenavi-css.css in the child theme, first
