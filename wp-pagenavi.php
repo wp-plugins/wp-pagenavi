@@ -3,7 +3,7 @@
 Plugin Name: WP-PageNavi
 Plugin URI: http://lesterchan.net/portfolio/programming/php/
 Description: Adds a more advanced paging navigation to your WordPress blog.
-Version: 2.60
+Version: 2.61
 Author: Lester 'GaMerZ' Chan
 Author URI: http://lesterchan.net
 */
@@ -74,7 +74,7 @@ function wp_pagenavi($before = '', $after = '') {
 	$posts_per_page = intval(get_query_var('posts_per_page'));
 	$paged = intval(get_query_var('paged'));
 	$numposts = $wp_query->found_posts;
-	$max_page = $wp_query->max_num_pages;
+	$max_page = intval($wp_query->max_num_pages);
 
 	if (empty($paged) || $paged == 0)
 		$paged = 1;
@@ -104,8 +104,9 @@ function wp_pagenavi($before = '', $after = '') {
 		$start_page = 1;
 
 	$larger_pages_array = array();
-	for($i = $larger_page_multiple; $i <= $max_page; $i+=$larger_page_multiple)
-		$larger_pages_array[] = $i;
+	if ( $larger_page_multiple )
+		for ( $i = $larger_page_multiple; $i <= $max_page; $i += $larger_page_multiple )
+			$larger_pages_array[] = $i;
 
 	if ($max_page > 1 || intval($pagenavi_options['always_show'])) {
 		$pages_text = str_replace("%CURRENT_PAGE%", number_format_i18n($paged), $pagenavi_options['pages_text']);
