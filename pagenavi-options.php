@@ -1,87 +1,84 @@
 <?php
-/*
-+----------------------------------------------------------------+
-|																							|
-|	WordPress 2.8 Plugin: WP-PageNavi 2.60									|
-|	Copyright (c) 2009 Lester "GaMerZ" Chan									|
-|																							|
-|	File Written By:																	|
-|	- Lester "GaMerZ" Chan															|
-|	- http://lesterchan.net															|
-|																							|
-|	File Information:																	|
-|	- Page Navigation Options Page												|
-|	- wp-content/plugins/wp-pagenavi/pagenavi-options.php			|
-|																							|
-+----------------------------------------------------------------+
-*/
+/*----------------------------------------------------------------*
+	WordPress 2.8 Plugin: WP-PageNavi 2.60									
+	Copyright (c) 2009 Lester "GaMerZ" Chan									
+																							
+	File Written By:																	
+	- Lester "GaMerZ" Chan															
+	- http://lesterchan.net
+																							
+	File Information:																	
+	- Page Navigation Options Page
+	- wp-content/plugins/wp-pagenavi/pagenavi-options.php
+ *----------------------------------------------------------------*/
 
 
 ### Variables Variables Variables
 $base_name = plugin_basename('wp-pagenavi/pagenavi-options.php');
 $base_page = 'admin.php?page='.$base_name;
-$mode = trim($_GET['mode']);
+$mode = trim(@$_GET['mode']);
 $pagenavi_settings = array('pagenavi_options');
 
 
-### Form Processing 
+### Form Processing
 // Update Options
-if(!empty($_POST['Submit'])) {
+if (!empty($_POST['Submit'])) {
+
 	$pagenavi_options = array();
-	$pagenavi_options['pages_text'] = addslashes($_POST['pagenavi_pages_text']);
-	$pagenavi_options['current_text'] = addslashes($_POST['pagenavi_current_text']);
-	$pagenavi_options['page_text'] = addslashes($_POST['pagenavi_page_text']);
-	$pagenavi_options['first_text'] = addslashes($_POST['pagenavi_first_text']);
-	$pagenavi_options['last_text'] = addslashes($_POST['pagenavi_last_text']);
-	$pagenavi_options['next_text'] = addslashes($_POST['pagenavi_next_text']);
-	$pagenavi_options['prev_text'] = addslashes($_POST['pagenavi_prev_text']);
-	$pagenavi_options['dotright_text'] = addslashes($_POST['pagenavi_dotright_text']);
-	$pagenavi_options['dotleft_text'] = addslashes($_POST['pagenavi_dotleft_text']);
-	$pagenavi_options['style'] = intval(trim($_POST['pagenavi_style']));
-	$pagenavi_options['num_pages'] = intval(trim($_POST['pagenavi_num_pages']));
-	$pagenavi_options['always_show'] = intval(trim($_POST['pagenavi_always_show']));
-	$pagenavi_options['num_larger_page_numbers'] = intval(trim($_POST['pagenavi_num_larger_page_numbers']));
-	$pagenavi_options['larger_page_numbers_multiple'] = intval(trim($_POST['pagenavi_larger_page_numbers_multiple']));
-	$pagenavi_options['use_pagenavi_css'] = intval(trim($_POST['use_pagenavi_css']));
+	$pagenavi_options['pages_text'] = addslashes(@$_POST['pagenavi_pages_text']);
+	$pagenavi_options['current_text'] = addslashes(@$_POST['pagenavi_current_text']);
+	$pagenavi_options['page_text'] = addslashes(@$_POST['pagenavi_page_text']);
+	$pagenavi_options['first_text'] = addslashes(@$_POST['pagenavi_first_text']);
+	$pagenavi_options['last_text'] = addslashes(@$_POST['pagenavi_last_text']);
+	$pagenavi_options['next_text'] = addslashes(@$_POST['pagenavi_next_text']);
+	$pagenavi_options['prev_text'] = addslashes(@$_POST['pagenavi_prev_text']);
+	$pagenavi_options['dotright_text'] = addslashes(@$_POST['pagenavi_dotright_text']);
+	$pagenavi_options['dotleft_text'] = addslashes(@$_POST['pagenavi_dotleft_text']);
+	$pagenavi_options['style'] = intval(@$_POST['pagenavi_style']);
+	$pagenavi_options['num_pages'] = intval(@$_POST['pagenavi_num_pages']);
+	$pagenavi_options['always_show'] = (bool) @$_POST['pagenavi_always_show'];
+	$pagenavi_options['num_larger_page_numbers'] = intval(@$_POST['pagenavi_num_larger_page_numbers']);
+	$pagenavi_options['larger_page_numbers_multiple'] = intval(@$_POST['pagenavi_larger_page_numbers_multiple']);
+	$pagenavi_options['use_pagenavi_css'] = (bool) @$_POST['use_pagenavi_css'];
+
 	$update_pagenavi_queries = array();
 	$update_pagenavi_text = array();
 	$update_pagenavi_queries[] = update_option('pagenavi_options', $pagenavi_options);
 	$update_pagenavi_text[] = __('Page Navigation Options', 'wp-pagenavi');
 	$i=0;
 	$text = '';
-	foreach($update_pagenavi_queries as $update_pagenavi_query) {
-		if($update_pagenavi_query) {
+	foreach ($update_pagenavi_queries as $update_pagenavi_query) {
+		if ($update_pagenavi_query) {
 			$text .= '<font color="green">'.$update_pagenavi_text[$i].' '.__('Updated', 'wp-pagenavi').'</font><br />';
 		}
 		$i++;
 	}
-	if(empty($text)) {
+	if (empty($text)) {
 		$text = '<font color="red">'.__('No Page Navigation Option Updated', 'wp-pagenavi').'</font>';
 	}
 }
+
 // Uninstall WP-PageNavi
-if(!empty($_POST['do'])) {
+if (!empty($_POST['do'])) {
 	switch($_POST['do']) {		
 		case __('UNINSTALL WP-PageNavi', 'wp-pagenavi') :
-			if(trim($_POST['uninstall_pagenavi_yes']) == 'yes') {
-				echo '<div id="message" class="updated fade">';
-				echo '<p>';
-				foreach($pagenavi_settings as $setting) {
-					$delete_setting = delete_option($setting);
-					if($delete_setting) {
-						echo '<font color="green">';
-						printf(__('Setting Key \'%s\' has been deleted.', 'wp-pagenavi'), "<strong><em>{$setting}</em></strong>");
-						echo '</font><br />';
-					} else {
-						echo '<font color="red">';
-						printf(__('Error deleting Setting Key \'%s\'.', 'wp-pagenavi'), "<strong><em>{$setting}</em></strong>");
-						echo '</font><br />';
-					}
+			echo '<div id="message" class="updated fade">';
+			echo '<p>';
+			foreach ($pagenavi_settings as $setting) {
+				$delete_setting = delete_option($setting);
+				if ($delete_setting) {
+					echo '<font color="green">';
+					printf(__('Setting Key \'%s\' has been deleted.', 'wp-pagenavi'), "<strong><em>{$setting}</em></strong>");
+					echo '</font><br />';
+				} else {
+					echo '<font color="red">';
+					printf(__('Error deleting Setting Key \'%s\'.', 'wp-pagenavi'), "<strong><em>{$setting}</em></strong>");
+					echo '</font><br />';
 				}
-				echo '</p>';
-				echo '</div>'; 
-				$mode = 'end-UNINSTALL';
 			}
+			echo '</p>';
+			echo '</div>';
+			$mode = 'end-UNINSTALL';
 			break;
 	}
 }
@@ -89,22 +86,20 @@ if(!empty($_POST['do'])) {
 
 ### Determines Which Mode It Is
 switch($mode) {
-		//  Deactivating WP-PageNavi
-		case 'end-UNINSTALL':
-			$deactivate_url = 'plugins.php?action=deactivate&amp;plugin=wp-pagenavi/wp-pagenavi.php';
-			if(function_exists('wp_nonce_url')) { 
-				$deactivate_url = wp_nonce_url($deactivate_url, 'deactivate-plugin_wp-pagenavi/wp-pagenavi.php');
-			}
-			echo '<div class="wrap">';
-			echo '<h2>'.__('Uninstall WP-PageNavi', 'wp-pagenavi').'</h2>';
-			echo '<p><strong>'.sprintf(__('<a href="%s">Click Here</a> To Finish The Uninstallation And WP-PageNavi Will Be Deactivated Automatically.', 'wp-pagenavi'), $deactivate_url).'</strong></p>';
-			echo '</div>';
-			break;
+	//  Deactivating WP-PageNavi
+	case 'end-UNINSTALL':
+		$deactivate_url = 'plugins.php?action=deactivate&amp;plugin=wp-pagenavi/wp-pagenavi.php';
+		$deactivate_url = wp_nonce_url($deactivate_url, 'deactivate-plugin_wp-pagenavi/wp-pagenavi.php');
+		echo '<div class="wrap">';
+		echo '<h2>'.__('Uninstall WP-PageNavi', 'wp-pagenavi').'</h2>';
+		echo '<p><strong>'.sprintf(__('<a href="%s">Click Here</a> To Finish The Uninstallation And WP-PageNavi Will Be Deactivated Automatically.', 'wp-pagenavi'), $deactivate_url).'</strong></p>';
+		echo '</div>';
+		break;
 	// Main Page
 	default:
 		$pagenavi_options = get_option('pagenavi_options');
 ?>
-<?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
+<?php if (!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
 <form method="post" action="<?php echo admin_url('admin.php?page='.plugin_basename(__FILE__)); ?>">
 <div class="wrap">
 	<?php screen_icon(); ?>
@@ -134,27 +129,27 @@ switch($mode) {
 			</td>
 		</tr>
 		<tr>
-			<th scope="row" valign="top"><?php _e('Text For First Post', 'wp-pagenavi'); ?></th>
+			<th scope="row" valign="top"><?php _e('Text For First Page', 'wp-pagenavi'); ?></th>
 			<td>
 				<input type="text" name="pagenavi_first_text" value="<?php echo stripslashes(htmlspecialchars($pagenavi_options['first_text'])); ?>" size="30" /><br />
 				%TOTAL_PAGES% - <?php _e('The total number of pages.', 'wp-pagenavi'); ?>
 			</td>
 		</tr>
 		<tr>
-			<th scope="row" valign="top"><?php _e('Text For Last Post', 'wp-pagenavi'); ?></th>
+			<th scope="row" valign="top"><?php _e('Text For Last Page', 'wp-pagenavi'); ?></th>
 			<td>
 				<input type="text" name="pagenavi_last_text" value="<?php echo stripslashes(htmlspecialchars($pagenavi_options['last_text'])); ?>" size="30" /><br />
 				%TOTAL_PAGES% - <?php _e('The total number of pages.', 'wp-pagenavi'); ?>
 			</td>
 		</tr>
 		<tr>
-			<th scope="row" valign="top"><?php _e('Text For Next Post', 'wp-pagenavi'); ?></th>
+			<th scope="row" valign="top"><?php _e('Text For Next Page', 'wp-pagenavi'); ?></th>
 			<td>
 				<input type="text" name="pagenavi_next_text" value="<?php echo stripslashes(htmlspecialchars($pagenavi_options['next_text'])); ?>" size="30" />
 			</td>
 		</tr>
 		<tr>
-			<th scope="row" valign="top"><?php _e('Text For Previous Post', 'wp-pagenavi'); ?></th>
+			<th scope="row" valign="top"><?php _e('Text For Previous Page', 'wp-pagenavi'); ?></th>
 			<td>
 				<input type="text" name="pagenavi_prev_text" value="<?php echo stripslashes(htmlspecialchars($pagenavi_options['prev_text'])); ?>" size="30" />
 			</td>
@@ -177,11 +172,8 @@ switch($mode) {
 		<tr>
 			<th scope="row" valign="top"><?php _e('Use pagenavi.css?', 'wp-pagenavi'); ?></th>
 			<td>
-				<select name="use_pagenavi_css" size="1">
-					<option value="0"<?php selected('0', $pagenavi_options['use_pagenavi_css']); ?>><?php _e('No', 'wp-pagenavi'); ?></option>
-					<option value="1"<?php selected('1', $pagenavi_options['use_pagenavi_css']); ?>><?php _e('Yes', 'wp-pagenavi'); ?></option>
-				</select>
-			</td> 
+				<input type="checkbox" name="use_pagenavi_css" value="1" <?php checked($pagenavi_options['use_pagenavi_css']); ?>>
+			</td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php _e('Page Navigation Style', 'wp-pagenavi'); ?></th>
@@ -190,7 +182,7 @@ switch($mode) {
 					<option value="1"<?php selected('1', $pagenavi_options['style']); ?>><?php _e('Normal', 'wp-pagenavi'); ?></option>
 					<option value="2"<?php selected('2', $pagenavi_options['style']); ?>><?php _e('Drop Down List', 'wp-pagenavi'); ?></option>
 				</select>
-			</td> 
+			</td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php _e('Number Of Pages To Show?', 'wp-pagenavi'); ?></th>
@@ -201,11 +193,9 @@ switch($mode) {
 		<tr>
 			<th scope="row" valign="top"><?php _e('Always Show Page Navigation?', 'wp-pagenavi'); ?></th>
 			<td>
-				<select name="pagenavi_always_show" size="1">
-					<option value="1"<?php selected('1', $pagenavi_options['always_show']); ?>><?php _e('Yes', 'wp-pagenavi'); ?></option>
-					<option value="0"<?php selected('0', $pagenavi_options['always_show']); ?>><?php _e('No', 'wp-pagenavi'); ?></option>
-				</select>
-			</td> 
+				<input type="checkbox" name="pagenavi_always_show" value="1" <?php checked($pagenavi_options['always_show']); ?>>
+				<?php _e("Show navigation even if there's only one page", 'wp-pagenavi'); ?>
+			</td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php _e('Number Of Larger Page Numbers To Show?', 'wp-pagenavi'); ?></th>
@@ -234,12 +224,12 @@ switch($mode) {
 		<input type="submit" name="Submit" class="button" value="<?php _e('Save Changes', 'wp-pagenavi'); ?>" />
 	</p>
 </div>
-</form> 
+</form>
 <p>&nbsp;</p>
 
 <!-- Uninstall WP-PageNavi -->
 <form method="post" action="<?php echo admin_url('admin.php?page='.plugin_basename(__FILE__)); ?>">
-<div class="wrap"> 
+<div class="wrap">
 	<h3><?php _e('Uninstall WP-PageNavi', 'wp-pagenavi'); ?></h3>
 	<p>
 		<?php _e('Deactivating WP-PageNavi plugin does not remove any data that may have been created, such as the page navigation options. To completely remove this plugin, you can uninstall it here.', 'wp-pagenavi'); ?>
@@ -261,7 +251,7 @@ switch($mode) {
 			<td valign="top">
 				<ol>
 				<?php
-					foreach($pagenavi_settings as $settings) {
+					foreach ($pagenavi_settings as $settings) {
 						echo '<li>'.$settings.'</li>'."\n";
 					}
 				?>
@@ -271,10 +261,9 @@ switch($mode) {
 	</table>
 	<p>&nbsp;</p>
 	<p style="text-align: center;">
-		<input type="checkbox" name="uninstall_pagenavi_yes" value="yes" />&nbsp;<?php _e('Yes', 'wp-pagenavi'); ?><br /><br />
 		<input type="submit" name="do" value="<?php _e('UNINSTALL WP-PageNavi', 'wp-pagenavi'); ?>" class="button" onclick="return confirm('<?php _e('You Are About To Uninstall WP-PageNavi From WordPress.\nThis Action Is Not Reversible.\n\n Choose [Cancel] To Stop, [OK] To Uninstall.', 'wp-pagenavi'); ?>')" />
 	</p>
-</div> 
+</div>
 </form>
 <?php
 } // End switch($mode)
