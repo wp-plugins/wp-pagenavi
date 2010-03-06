@@ -49,10 +49,6 @@ Alternatively, you can uncheck the "Use pagenavi.css?" option from the settings 
 1. Default appearance
 2. Options page
 
-== Frequently Asked Questions ==
-
-[WP-PageNavi Support Forums](http://forums.lesterchan.net/index.php?board=14.0 "WP-PageNavi Support Forums")
-
 == Changelog ==
 
 = 2.61 (2010-02-07) =
