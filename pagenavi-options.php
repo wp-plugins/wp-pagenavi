@@ -13,6 +13,8 @@
  *----------------------------------------------------------------*/
 
 $pagenavi_options = get_option('pagenavi_options');
+
+var_dump('huh');
 ?>
 
 <div class="wrap">

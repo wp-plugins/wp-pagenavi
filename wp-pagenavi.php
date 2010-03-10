@@ -38,7 +38,7 @@ function pagenavi_textdomain() {
 ### Function: Page Navigation Option Menu
 add_action('admin_menu', 'pagenavi_menu');
 function pagenavi_menu() {
-	add_options_page(__('Pagination', 'wp-pagenavi'), __('Pagination', 'wp-pagenavi'), 'manage_options', 'wp-pagenavi/pagenavi-options.php') ;
+	add_options_page(__('Pagination', 'wp-pagenavi'), __('Pagination', 'wp-pagenavi'), 'manage_options', 'wpn-kahi/pagenavi-options.php') ;
 }
 
 ### Function: Enqueue PageNavi Stylesheets
