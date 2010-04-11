@@ -31,14 +31,39 @@ class scbUtil {
 		echo "</script>";
 	}
 
-	// Extract $keys from $array
+	// Extract certain $keys from $array
 	static function array_extract($array, $keys) {
 		$r = array();
+
 		foreach ( $keys as $key )
 			if ( array_key_exists($key, $array) )
 				$r[$key] = $array[$key];
 
-	   return $r;
+		return $r;
+	}
+
+	// Extract a certain value from a list of arrays
+	static function array_pluck($array, $key) {
+		$r = array();
+
+		foreach ( $array as $value ) {
+			if ( is_object($value) )
+				$value = get_object_vars($value);
+			if ( array_key_exists($key, $value) )
+				$r[] = $v[$key];
+		}
+
+		return $r;
+	}
+
+	// Transform a list of objects into an associative array
+	static function objects_to_assoc($objects, $key, $value) {
+		$r = array();
+
+		foreach ( $objects as $obj )
+			$r[$obj->$key] = $obj->$value;
+
+		return $r;
 	}
 
 	// Prepare an array for an IN statement
@@ -48,8 +73,14 @@ class scbUtil {
 
 		return implode(',', $values);
 	}
-}
 
+	// Have more than one uninstall hooks; also prevents an UPDATE query on each page load
+	static function add_uninstall_hook($plugin, $callback) {
+		register_uninstall_hook($plugin, '__return_false');	// dummy
+
+		add_action('uninstall_' . plugin_basename($plugin), $callback);
+	}
+}
 
 // _____Simple debug utility_____
 
@@ -63,6 +94,13 @@ class scbDebug {
 		register_shutdown_function(array($this, '_delayed'));
 	}
 
+	function _delayed() {
+		if ( !current_user_can('administrator') )
+			return;
+
+		$this->raw($this->args);
+	}
+
 	static function raw($args) {
 		echo "<pre>";
 		foreach ( $args as $arg )
@@ -72,13 +110,6 @@ class scbDebug {
 				var_dump($arg);
 		echo "</pre>";	
 	}
-
-	function _delayed() {
-		if ( !current_user_can('administrator') )
-			return;
-
-		$this->raw($this->args);
-	}
 }
 endif;
 
@@ -87,9 +118,9 @@ function debug() {
 	$args = func_get_args();
 
 	// integrate with FirePHP
-	if ( 1==0 && class_exists('FirePHP') ) {
+	if ( class_exists('FirePHP') ) {
 		$firephp = FirePHP::getInstance(true);
-		$firephp->group('aaa');
+		$firephp->group('debug');
 		foreach ( $args as $arg )
 			$firephp->log($arg);
 		$firephp->groupEnd();
@@ -98,6 +129,14 @@ function debug() {
 	}
 
 	new scbDebug($args);
+}
+endif;
+
+if ( ! function_exists('debug_raw') ):
+function debug_raw() {
+	$args = func_get_args();
+
+	scbDebug::raw($args);
 }
 endif;
 
