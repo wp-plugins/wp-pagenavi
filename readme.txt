@@ -4,7 +4,7 @@ Donate link: http://lesterchan.net/wordpress
 Tags: navigation, pagination, paging, pages
 Requires at least: 2.8
 Tested up to: 3.0
-Stable tag: 2.70
+Stable tag: 2.72
 
 Adds a more advanced paging navigation to your WordPress site.
 
@@ -49,11 +49,12 @@ Alternatively, you can uncheck the "Use pagenavi.css?" option from the settings 
 
 == Frequently Asked Questions ==
 
-= "Parse error: syntax error, unexpected..." Help! =
+= Error on activation: "Parse error: syntax error, unexpected..." =
 
-Make sure your host is running PHP 5. Add this line to wp-config.php to check:
+Make sure your host is running PHP 5. The only foolproof way to do this is to add this line to wp-config.php:
 
 `var_dump(PHP_VERSION);`
+<br>
 
 = Doesn't work with query_posts() =
 
@@ -65,8 +66,12 @@ Read before upgrading: http://scribu.net/wordpress/wp-pagenavi/wp-2-70.html
 
 == Changelog ==
 
-= 2.71 (2010-X-X) =
+= 2.72 (2010-04-19) =
+* fix first link
+
+= 2.71 (2010-04-18) =
 * remove conflicting .left and .right from .extend elements
+* bundle language files
 
 = 2.70 (2010-04-11) =
 * better default CSS
