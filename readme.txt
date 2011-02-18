@@ -70,7 +70,7 @@ You can do that like so:
 
 == Changelog ==
 
-= 2.74 (2010-02-17) =
+= 2.74 (2011-02-17) =
 * added 'smaller' and 'larger' classes
 * added $query arg to wp_pagenavi()
 * updated translations
