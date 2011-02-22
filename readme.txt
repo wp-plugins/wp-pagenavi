@@ -4,7 +4,7 @@ Donate link: http://lesterchan.net/site/donation/
 Tags: navigation, pagination, paging, pages
 Requires at least: 2.8
 Tested up to: 3.1
-Stable tag: trunk
+Stable tag: 2.74
 
 Adds a more advanced paging navigation to your WordPress site.
 
@@ -69,6 +69,9 @@ You can do that like so:
 `<?php wp_pagenavi( array( 'options' => PageNavi_Core::$options->get_defaults() ) ); ?>`
 
 == Changelog ==
+
+= 2.75 =
+* added warning when 'paged' is not set
 
 = 2.74 (2011-02-17) =
 * added 'smaller' and 'larger' classes
