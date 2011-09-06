@@ -1,6 +1,5 @@
 === WP-PageNavi ===
 Contributors: GamerZ, scribu
-Donate link: http://lesterchan.net/site/donation/
 Tags: navigation, pagination, paging, pages
 Requires at least: 2.8
 Tested up to: 3.1
