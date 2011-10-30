@@ -210,7 +210,27 @@ function _wp_pagenavi_get_url( $page ) {
 	return $multipage ? get_multipage_link( $page ) : get_pagenum_link( $page );
 }
 
-// Template tag: Drop Down Menu ( Deprecated )
+# http://core.trac.wordpress.org/ticket/16973
+if ( !function_exists( 'get_multipage_link' ) ) :
+function get_multipage_link( $page = 1 ) {
+	global $post, $wp_rewrite;
+
+	if ( 1 == $page ) {
+		$url = get_permalink();
+	} else {
+		if ( '' == get_option('permalink_structure') || in_array( $post->post_status, array( 'draft', 'pending') ) )
+			$url = add_query_arg( 'page', $page, get_permalink() );
+		elseif ( 'page' == get_option( 'show_on_front' ) && get_option('page_on_front') == $post->ID )
+			$url = trailingslashit( get_permalink() ) . user_trailingslashit( $wp_rewrite->pagination_base . "/$page", 'single_paged' );
+		else
+			$url = trailingslashit( get_permalink() ) . user_trailingslashit( $page, 'single_paged' );
+	}
+
+	return $url;
+}
+endif;
+
+// Template tag: Drop Down Menu (Deprecated)
 function wp_pagenavi_dropdown() {
 	wp_pagenavi();
 }
@@ -229,9 +249,9 @@ class PageNavi_Core {
 		if ( !self::$options->use_pagenavi_css )
 			return;
 
-		if ( @file_exists( STYLESHEETPATH . '/pagenavi-css.css' ) )
+		if ( @file_exists( get_stylesheet_directory() . '/pagenavi-css.css' ) )
 			$css_file = get_stylesheet_directory_uri() . '/pagenavi-css.css';
-		elseif ( @file_exists( TEMPLATEPATH . '/pagenavi-css.css' ) )
+		elseif ( @file_exists( get_template_directory() . '/pagenavi-css.css' ) )
 			$css_file = get_template_directory_uri() . '/pagenavi-css.css';
 		else
 			$css_file = plugins_url( 'pagenavi-css.css', __FILE__ );
