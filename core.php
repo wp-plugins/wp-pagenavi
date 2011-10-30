@@ -188,9 +188,6 @@ function _wp_pagenavi_get_args( $query ) {
 		$posts_per_page = intval( $query->get( 'posts_per_page' ) );
 		$paged = max( 1, absint( $query->get( 'paged' ) ) );
 		$total_pages = max( 1, absint( $query->max_num_pages ) );
-
-		if ( isset( $wp->query_vars['paged'] ) && $wp->query_vars['paged'] > 1 && 1 == $paged )
-			echo "<br><strong>Warning:</strong> You forgot to set the 'paged' query var.<br>";
 	}
 
 	return array( $posts_per_page, $paged, $total_pages );
@@ -212,26 +209,6 @@ function _wp_pagenavi_get_url( $page ) {
 
 	return $multipage ? get_multipage_link( $page ) : get_pagenum_link( $page );
 }
-
-// WP < 3.2
-if ( !function_exists( 'get_multipage_link' ) ) :
-function get_multipage_link( $page = 1 ) {
-	global $post, $wp_rewrite;
-
-	if ( 1 == $page ) {
-		$url = get_permalink();
-	} else {
-		if ( '' == get_option('permalink_structure') || in_array( $post->post_status, array( 'draft', 'pending') ) )
-			$url = add_query_arg( 'page', $page, get_permalink() );
-		elseif ( 'page' == get_option( 'show_on_front' ) && get_option('page_on_front') == $post->ID )
-			$url = trailingslashit( get_permalink() ) . user_trailingslashit( $wp_rewrite->pagination_base . "/$page", 'single_paged' );
-		else
-			$url = trailingslashit( get_permalink() ) . user_trailingslashit( $page, 'single_paged' );
-	}
-
-	return $url;
-}
-endif;
 
 // Template tag: Drop Down Menu ( Deprecated )
 function wp_pagenavi_dropdown() {
