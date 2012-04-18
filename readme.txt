@@ -24,9 +24,9 @@ You can either install it automatically from the WordPress admin, or do it manua
 1. Unzip the archive and put the `wp-pagenavi` folder into your plugins folder (/wp-content/plugins/).
 1. Activate the plugin from the Plugins menu.
 
-= Usage =
+= Archives =
 
-In your theme, you need to find calls to next_posts_link() and previous_posts_link() and replace them.
+In your theme, you need to find calls to `next_posts_link()` and `previous_posts_link()` and replace them.
 
 In the Twentyten theme, it looks like this:
 
@@ -38,6 +38,8 @@ In the Twentyten theme, it looks like this:
 You would replace those two lines with this:
 
 `<?php wp_pagenavi(); ?>`
+
+= Multipart pages =
 
 For multipart pages, you would look for code like this:
 
