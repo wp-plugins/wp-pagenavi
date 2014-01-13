@@ -3,9 +3,9 @@ Contributors: GamerZ, scribu
 Donate link: http://lesterchan.net/site/donation/  
 Tags: navigation, pagination, paging, pages  
 Requires at least: 3.2  
-Tested up to: 3.5  
-Stable tag: 2.83  
-License: GPLv2 or later  
+Tested up to: 3.8
+Stable tag: trunk
+License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Adds a more advanced paging navigation interface.
@@ -87,6 +87,9 @@ You can do that like so:
 `<?php wp_pagenavi( array( 'options' => PageNavi_Core::$options->get_defaults() ) ); ?>`
 
 == Changelog ==
+
+= 2.84 =
+* FIXED: Updated scb framework to fix scbAdminPage incompatible error
 
 = 2.83 =
 * added 'echo' parameter
@@ -170,7 +173,7 @@ You can do that like so:
 
 = 2.11 (2007-06-01) =
 * new: Page Navigation Now Is Customizable Via 'WP-Admin -> Options -> PageNavi' And pagenavi-css.css
-* new: Default Style Navigation Is Now Boxed Navigation (Similar To Digg.com) 
+* new: Default Style Navigation Is Now Boxed Navigation (Similar To Digg.com)
 * fixed: Fix For Ultimate Tag Warrior By Oliver Kastler & Stephan (Netconcepts)
 
 = 2.10 (2007-02-01) =
