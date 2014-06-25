@@ -73,8 +73,9 @@ class scbLoad4 {
 		}
 
 		if ( $do_callbacks )
-			foreach ( self::$callbacks as $callback )
+			foreach ( self::$callbacks as $callback ) {
 				call_user_func( $callback );
+			}
 	}
 
 	static function get_info() {
